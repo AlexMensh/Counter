@@ -843,7 +843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 1090333712}
-  maxValue: 100
+  _maxValue: 100
 --- !u!4 &1884069151
 Transform:
   m_ObjectHideFlags: 0

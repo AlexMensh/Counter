@@ -5,7 +5,9 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _timerText;
-    [SerializeField] private int maxValue;
+    [SerializeField] private int _maxValue;
+
+    private Coroutine _timerCoroutine;
 
     private int value = 0;
     private float _delay = 0.5f;
@@ -16,23 +18,11 @@ public class Timer : MonoBehaviour
         _timerText.text = value.ToString();
     }
 
-    private void Update()
-    {
-        if (_isActive == false)
-        {
-            StopAllCoroutines();
-        }
-        else
-        {
-            StartCoroutine(Count());
-        }
-    }
-
     private IEnumerator Count()
     {
         var wait = new WaitForSeconds(_delay);
 
-        for (int i = value; i < maxValue; i++)
+        for (int i = value; i < _maxValue; i++)
         {
             value = i;
 
@@ -42,13 +32,22 @@ public class Timer : MonoBehaviour
         }
     }
 
-    private void DisplayCount(int value)
-    {
-        _timerText.text = value.ToString();
-    }
-
     public void Switch()
     {
         _isActive = !_isActive;
+
+        if (_isActive == false)
+        {
+            StopCoroutine(_timerCoroutine);
+        }
+        else
+        {
+            _timerCoroutine = StartCoroutine(Count());
+        }
+    }
+
+    private void DisplayCount(int value)
+    {
+        _timerText.text = value.ToString();
     }
 }
